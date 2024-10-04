@@ -1,0 +1,8 @@
+routes:
+  /voice/admin/services:
+    transform: '[.[] | select((.id|tostring) | in($ids)) | {(.id | tostring): {"id": .id, "label": ("voice service name " + (.id|tostring) + " (" + .phone + ")") }}] | add'
+    backend: 'http://voice-svc:8080'
+  /api/account/groups/mapping:
+    transform: '[.[] | {(.id|tostring): {"id": .id, "label": .name}}] | add'
+    backend: 'http://account-svc:8080'
+    rewrite: '/api/account/admin/groups/isolation/list'
